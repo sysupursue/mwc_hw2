@@ -15,7 +15,9 @@ function getAllTables(){
 //表格排序
 function makeAllTablesSortable(tables){
     for(var i = 0 ; i < tables.length ; i++)
+    {
         tableProcess(tables[i]);
+    }
 }
 
 //单个表格处理
@@ -29,23 +31,19 @@ function getData(table)
 {
         var rowArray = [ ];             //二维形式存储表格数据
         var cellArray = [ ];
-        var rLegth = table.rows.length;
+        var rLength = table.rows.length;
 
-        for(var r = 1 ; r < table.rows.length ; r++)
-        {
+        for(var r = 1 ; r < rLength ; r++)
             for(var c = 0 ; c < table.rows[r].cells.length ; c++)
-            {
                 cellArray.push(table.rows[r].cells[c].innerText);
-            }
             rowArray.push(cellArray);
-        }
-        return rowArray;
-    }
+            return rowArray;
+}
 
 //事件处理
 function eventDeal(table)
 {
-    var tableData = getData(table);
+    var tableData = getData(table);                                 //用于存储单个表格数据
     var tableHead = table.rows[0].cells;
 
     for(var i = 0 ; i < tableHead.length ; i++)
@@ -65,10 +63,12 @@ function eventDeal(table)
 
             //排序
             var sorted = colSort(tableData,clickTarget.cellIndex,sortType);
-            console.log(typeof(sorted));
+
+            for(var i = 0 ; i < sorted.length; i++)
+                for(var j = 0 ;  j< sorted[i].length; j++)
+                    console.log("row "+i+" col "+j+" = "+sorted[i][j] +"row = " + sorted.length + "col" + sorted[i].length);
 
             //数据更新
-
         }
     }
 }
@@ -77,15 +77,9 @@ function eventDeal(table)
 function colSort(array,celIndex,sorttype)
 {
     if(sorttype == " ")
-        array.sort(function(x,y){console.log("默认"); return x[celIndex].localeCompare(y[celIndex]);});
+        return array.sort(function(x,y){console.log("默认"); return x[celIndex].localeCompare(y[celIndex]);});
     else if(sorttype == "asc")
-        array.sort(function(x,y){console.log("升序"); return x[celIndex].localeCompare(y[celIndex]);});
+        return array.sort(function(x,y){console.log("升序"); return x[celIndex].localeCompare(y[celIndex]);});
     else
-        array.sort(function(x,y){console.log("降序"); return y[celIndex].localeCompare(x[celIndex]);});
-}
-
-//数据更新
-function updateData(table)
-{
-
+        return array.sort(function(x,y){console.log("降序"); return y[celIndex].localeCompare(x[celIndex]);});
 }
