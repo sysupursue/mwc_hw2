@@ -38,7 +38,7 @@ function getData(table)
                 cellArray.push(table.rows[r].cells[c].innerText);
             rowArray.push(cellArray);
             return rowArray;
-}
+        }
 
 //事件处理
 function eventDeal(table)
@@ -63,11 +63,7 @@ function eventDeal(table)
 
             //排序
             var sorted = colSort(tableData,clickTarget.cellIndex,sortType);
-
-            for(var i = 0 ; i < sorted.length; i++)
-                for(var j = 0 ;  j< sorted[i].length; j++)
-                    console.log("row "+i+" col "+j+" = "+sorted[i][j] +"row = " + sorted.length + "col" + sorted[i].length);
-
+            console.log("排序后数组："+sorted.length)
             //数据更新
         }
     }
@@ -76,10 +72,16 @@ function eventDeal(table)
 //按列排序
 function colSort(array,celIndex,sorttype)
 {
-    if(sorttype == " ")
-        return array.sort(function(x,y){console.log("默认"); return x[celIndex].localeCompare(y[celIndex]);});
-    else if(sorttype == "asc")
-        return array.sort(function(x,y){console.log("升序"); return x[celIndex].localeCompare(y[celIndex]);});
-    else
-        return array.sort(function(x,y){console.log("降序"); return y[celIndex].localeCompare(x[celIndex]);});
+    if(sorttype == " "){
+        console.log("默认");
+        return array.sort(function(x,y){ return x[celIndex]-y[celIndex];});
+    }
+    else if(sorttype == "asc"){
+        console.log("升序");
+        return array.sort(function(x,y){ return x[celIndex]-y[celIndex];});
+    }
+    else{
+        console.log("降序");
+        return array.sort(function(x,y){ return y[celIndex]-x[celIndex];});
+    }
 }
